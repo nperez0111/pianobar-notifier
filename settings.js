@@ -106,7 +106,7 @@ const loadJsonFile = require( 'load-json-file' ),
             inquirer.prompt( [ { type: 'confirm', default: true, name: 'look', message: "Does this look about right?" } ] ).then( answer => {
                 if ( answer.look ) {
                     writeJSON( 'settings.json', obj ).then( () => {
-                        console.log( "Success." )
+                        console.log( "Success!" )
                     } ).catch( a => { console.log( "Something happened...", a ) } )
                 } else {
                     console.log( "Well... load it up again!" )

@@ -19,11 +19,11 @@ const run = () =>
 
 if ( !module.parent ) {
 
-    loadJson( file ).then( state => state.playing ).then( isPlaying => {
-        return run().then( () => {
-            writeJson( file, { playing: !isPlaying } )
-        } ).then( () => !isPlaying )
-    } ).then( isPlaying => {
+    loadJson( file ).then( state => state.playing ).then( isPlaying =>
+        run()
+        .then( () => writeJson( file, { playing: !isPlaying } ) )
+        .then( () => !isPlaying )
+    ).then( isPlaying => {
         simple( isPlaying ? 'isPlaying' : 'isPaused', {
             activate: action => {
                 ifHasElseDefaultAction( {
@@ -48,3 +48,6 @@ if ( !module.parent ) {
 }
 
 module.exports = run
+module.exports.clear = () => {
+    return writeJson( file, { playing: true } )
+}

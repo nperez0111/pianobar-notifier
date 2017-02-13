@@ -9,25 +9,26 @@ if ( !module.parent ) {
     run( 'hud' )
 }
 module.exports = {
-    likeSong: () => {
-        run( 'likeSong' )
+    likeSong: () =>
+        run( 'likeSong' ),
+    dislikeSong: () =>
+        run( 'dislikeSong' ),
+    nextSong: () =>
+        run( 'nextSong' ),
+    quit: () =>
+        run( 'quitPianobar' ),
+    getStations: () =>
+        run( 'selectStations' ),
+    playPause: () =>
+        run( 'playPause' ),
+    display: () =>
+        run( 'hud' ),
+    settings: () => {
+        const settings = require( './settings' )
+        settings()
     },
-    dislikeSong: () => {
-        run( 'dislikeSong' )
-    },
-    nextSong: () => {
-        run( 'nextSong' )
-    },
-    quit: () => {
-        run( 'quitPianobar' )
-    },
-    getStations: () => {
-        run( 'selectStations' )
-    },
-    playPause: () => {
-        run( 'playPause' )
-    },
-    display: () => {
-        run( 'hud' )
+    clearPlaying: () => {
+        const playPause = require( './playPause' )
+        playPause.clear()
     }
 }

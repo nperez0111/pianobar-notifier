@@ -103,6 +103,7 @@ const loadJsonFile = require( 'load-json-file' ),
             change( 'Fifo', 'ctlLoc', dir + '/.config/pianobar/ctl' )
 
             console.log( JSON.stringify( obj, ( a, b ) => b, 2 ) )
+
             inquirer.prompt( [ { type: 'confirm', default: true, name: 'look', message: "Does this look about right?" } ] ).then( answer => {
                 if ( answer.look ) {
                     writeJSON( 'settings.json', obj ).then( () => {

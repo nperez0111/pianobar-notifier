@@ -25,7 +25,7 @@ loadJsonFile( 'settings.json' ).then( json => {
     loadJsonFile( '/Users/nickthesick/.config/pianobar/cur.json' ).then( prefs => {
 
 
-        ( ( { albumArt, song, album, radio, artist, icon, url } ) => ( new Promise( function ( resolve, error ) {
+        ( ( { albumArt, song, album, radio, artist, icon, url, timing } ) => ( new Promise( function ( resolve, error ) {
             imageDownloader( {
                 url: albumArt,
                 dest: ( process.cwd() +
@@ -46,7 +46,7 @@ loadJsonFile( 'settings.json' ).then( json => {
                 icon: icon,
                 contentImage: filename,
                 closeLabel: "Quit",
-                timeout: 10,
+                timeout: timing,
                 actions: [ 'Next Song', 'Like Song', 'Dislike Song', 'Select Station' ]
             }, {
                 timeout: function () {
@@ -111,7 +111,8 @@ loadJsonFile( 'settings.json' ).then( json => {
             song: prefs.title,
             album: prefs.album,
             radio: prefs.songStationName || prefs.stationName,
-            icon: json.icon
+            icon: json.icon,
+            timing: json.timing
         } )
     } )
 } )

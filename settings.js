@@ -75,6 +75,12 @@ const loadJsonFile = require( 'load-json-file' ),
         name: 'ctlLoc',
         type: 'input',
         message: 'Input the full path to the Fifo file.'
+    }, {
+        type: 'input',
+        message: 'How long do you want your Notifications to last',
+        default: 10,
+        name: 'timing',
+        filter: a => parseInt( a, 10 )
     } ],
     changer = ( obj, ans, change, store, els ) => {
         if ( ans[ 'change' + change ] ) {
@@ -101,6 +107,8 @@ const loadJsonFile = require( 'load-json-file' ),
             }
             change( 'Icon', 'icon', dir + '/.config/pianobar/PandoraIco.png' )
             change( 'Fifo', 'ctlLoc', dir + '/.config/pianobar/ctl' )
+
+            obj.timing = answers.timing
 
             console.log( JSON.stringify( obj, ( a, b ) => b, 2 ) )
 

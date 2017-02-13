@@ -1,0 +1,32 @@
+{
+    "quit": {
+        "title": "Pianobar has been exited",
+        "message": "See you soon!"
+    },
+    "dislikeSong": {
+        "title": "Song has been disliked",
+        "message": "I didn't like it either!"
+    },
+    "likeSong": {
+        "title": "Song has been liked",
+        "message": "Glad you like it!"
+    },
+    "nextSong": {
+        "title": "Fetching Next Song...",
+        "message": "Next song will Play"
+    },
+    "isPlaying": {
+        "title": "Song is Playing",
+        "message": "Welcome back"
+    },
+    "isPaused": {
+        "title": "Song is Paused",
+        "message": "See you soon"
+    },
+    "selectStation": {
+        "title": "Select Station",
+        "message": "What Station would you like to play?",
+        "reply": true,
+        "timeout": 30
+    }
+}

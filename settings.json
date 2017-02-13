@@ -1,0 +1,8 @@
+{
+	"onClick": {
+		"open": "com.googlecode.iterm2",
+		"identifier": "bundle"
+	},
+	"icon": "/Users/nickthesick/.config/pianobar/PandoraIco.png",
+	"ctlLoc": "/Users/nickthesick/.config/pianobar/ctl"
+}

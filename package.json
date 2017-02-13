@@ -1,0 +1,20 @@
+{
+  "name": "pianobar-installer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "camelcase": "^4.0.0",
+    "homedir": "^0.6.0",
+    "image-downloader": "^2.0.3",
+    "inquirer": "^3.0.1",
+    "load-json-file": "^2.0.0",
+    "node-notifier": "^5.0.2",
+    "write-json-file": "^2.0.0"
+  }
+}

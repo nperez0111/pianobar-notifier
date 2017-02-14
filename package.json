@@ -13,7 +13,8 @@
         "selectStation": "./selectStation.js",
         "nextSong": "./nextSong.js",
         "quit": "./quitPianobar.js",
-        "settings": "./settings.js"
+        "settings": "./settings.js",
+        "hud": "./hud.js"
     },
     "author": "",
     "license": "ISC",

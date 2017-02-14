@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const notifier = require( './notifications' ),
     log = require( './debug.js' ),
     ctl = require( './logToCtl' ),

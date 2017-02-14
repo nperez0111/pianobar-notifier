@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const simple = require( './simpleTask' ),
     spawn = require( 'child_process' ).spawn,
     run = () => {

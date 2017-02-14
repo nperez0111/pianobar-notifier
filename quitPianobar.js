@@ -5,14 +5,12 @@ const simple = require( './simpleTask' ),
     pid = require( './isPianobarOn' ),
     run = () => {
         simple.run( 'quit' )
-        setTimeout( function () {
-            pid().then( pid => {
-                execa( 'kill', [ pid ] )
-            } ).catch( () => {
-                //couldn't find pid lets just do this again to try to kill it
-                simple.run( 'quit' )
-            } )
-        }, 20 )
+        return ( new Promise( function ( resolve ) { setTimeout( resolve, 20 ) } ) ).then( pid ).then( pid => {
+            execa( 'kill', [ pid ] )
+        } ).catch( () => {
+            //couldn't find pid lets just do this again to try to kill it
+            simple.run( 'quit' )
+        } )
 
     },
     singleRun = () => {

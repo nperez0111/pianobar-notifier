@@ -4,6 +4,8 @@ const logToCtl = require( './logToCtl' ),
     notifier = require( './notifications' ),
     loadJson = require( 'load-json-file' ),
     writeJson = require( 'write-json-file' ),
+    isOn = require( './isPianobarOn' ),
+    start = require( './start' ),
     file = "playing.json",
     camelCase = require( 'camelcase' ),
     ifHasElseDefaultAction = ( propObj, prop, ...args ) => {
@@ -13,22 +15,28 @@ const logToCtl = require( './logToCtl' ),
             propObj.defaultAction.apply( null, args )
         }
     },
-    simple = require( './simpleTask' )
+    simple = require( './simpleTask' ),
+    checkIfOn = func => isOn().then( func ).catch( err => {
+        if ( err !== false ) {
+            return func()
+        } else {
+            return start()
+        }
+    } )
 
-const run = () =>
-    logToCtl( 'playPauseSong' ),
+const run = () => checkIfOn( () => logToCtl( 'playPauseSong' ) ),
 
-    singleRun = () =>
-    loadJson( file ).then( state => state.playing ).then( isPlaying =>
-        run()
-        .then( () => writeJson( file, { playing: !isPlaying } ) )
-        .then( () => !isPlaying )
-    ).then( isPlaying => {
-        return playOrPause( isPlaying )
-    } ),
+    singleRun = () => checkIfOn( () =>
+        loadJson( file ).then( state => state.playing ).then( isPlaying =>
+            run()
+            .then( () => writeJson( file, { playing: !isPlaying } ) )
+            .then( () => !isPlaying )
+        ).then( isPlaying => {
+            return playOrPause( isPlaying )
+        } ) ),
 
     playOrPause = action => {
-        return loadJson( file ).then( state => state.playing ).then( isPlaying => {
+        return checkIfOn( () => loadJson( file ).then( state => state.playing ).then( isPlaying => {
             if ( isPlaying === action ) {
                 console.log( 'Is already doing the action specified' )
                 return action
@@ -55,7 +63,7 @@ const run = () =>
             }, {
                 actions: isPlaying ? 'Pause Track' : 'Play Track'
             } )
-        } )
+        } ) )
     }
 
 

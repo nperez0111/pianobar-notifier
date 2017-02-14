@@ -31,8 +31,8 @@ const commandLineCommands = require( 'command-line-commands' ),
             run( 'nextSong', require( './nextSong' ).singleRun ),
         next: () =>
             run( 'nextSong', require( './nextSong' ).singleRun ),
-        quit: () =>
-            run( 'quit', require( './quitPianobar' ).singleRun ),
+        quit: () => {
+            return require( './quitPianobar' ).singleRun() },
         selectStations: () =>
             run( 'selectStations', require( './selectStations' ).singleRun ),
         playPause: () =>

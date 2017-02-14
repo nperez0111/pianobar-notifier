@@ -112,7 +112,12 @@ const loadJsonFile = require( 'load-json-file' ),
 
             console.log( JSON.stringify( obj, ( a, b ) => b, 2 ) )
 
-            inquirer.prompt( [ { type: 'confirm', default: true, name: 'look', message: "Does this look about right?" } ] ).then( answer => {
+            inquirer.prompt( [ {
+                type: 'confirm',
+                default: true,
+                name: 'look',
+                message: "Does this look about right?"
+            } ] ).then( answer => {
                 if ( answer.look ) {
                     writeJSON( 'settings.json', obj ).then( () => {
                         console.log( "Success!" )

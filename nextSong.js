@@ -1,10 +1,14 @@
 #!/usr/bin/env node
 
 const simple = require( './simpleTask' ),
-    run = () => simple.run( 'nextSong' )
+    run = () => simple.run( 'nextSong' ),
+    singleRun = () => {
+        run()
+        simple( 'nextSong' )
+    }
 if ( !module.parent ) {
-    run()
-    simple( 'nextSong' )
+    singleRun()
 }
 
 module.exports = run
+module.exports.singleRun = singleRun

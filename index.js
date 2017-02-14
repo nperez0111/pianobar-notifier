@@ -2,6 +2,7 @@
 
 const commandLineCommands = require( 'command-line-commands' ),
     getUsage = require( 'command-line-usage' ),
+    execa = require( 'execa' ),
     usage = getUsage( [ {
         header: 'Pianobar-Notifier',
         content: 'Allows you to interact with Pianobar through notifications and this CLI'
@@ -23,29 +24,29 @@ const commandLineCommands = require( 'command-line-commands' ),
     } ] ),
     obj = {
         likeSong: () =>
-            run( 'likeSong' ),
+            run( 'likeSong', require( './likeSong' ).singleRun ),
         dislikeSong: () =>
-            run( 'dislikeSong' ),
+            run( 'dislikeSong', require( './dislikeSong' ).singleRun ),
         nextSong: () =>
-            run( 'nextSong' ),
+            run( 'nextSong', require( './nextSong' ).singleRun ),
+        next: () =>
+            run( 'nextSong', require( './nextSong' ).singleRun ),
         quit: () =>
-            run( 'quitPianobar' ),
+            run( 'quit', require( './quitPianobar' ).singleRun ),
         selectStations: () =>
-            run( 'selectStations' ),
+            run( 'selectStations', require( './selectStations' ).singleRun ),
         playPause: () =>
-            run( 'playPause' ),
+            run( 'playPause', require( './playPause' ).singleRun ),
         display: () =>
-            run( 'hud' ),
-        settings: () => {
-            const settings = require( './settings' )
-            settings()
-        },
+            run( 'hud', require( './hud' ) ),
+        settings: () =>
+            require( './settings' )(),
         clearPlaying: () => {
             const playPause = require( './playPause' )
             playPause.clear()
         },
         start: () => {
-            run( 'start' )
+            run( 'start', require( './start' ).singleRun )
         },
         help: () => {
             console.log( usage )
@@ -53,12 +54,29 @@ const commandLineCommands = require( 'command-line-commands' ),
     },
     validCommands = [ null ].concat( Object.keys( obj ) ),
     { command, argv } = commandLineCommands( validCommands ),
-    run = a => {
+    fileExists = require( 'file-exists' ),
+    isLocal = () => {
+        return fileExists.sync( 'hud.js' )
+    },
+    exec = file => {
         var cp = require( 'child_process' );
-        var child = cp.spawn( 'node', [ a + '.js' ], { detached: true, stdio: [ 'ignore', 'ignore', 'ignore' ] } );
+        var child = cp.spawn( 'node', [ file + '.js' ], { detached: true, stdio: [ 'ignore', 'ignore', 'ignore' ] } );
         child.unref();
-
     }
+run = ( file, executor ) => {
+    if ( isLocal() ) {
+        exec( file )
+    } else {
+        execa.stdout( 'npm', [ 'root', '-g' ] )
+            .then( loc => loc + '/pianobar-notifier/' + file )
+            .then( loc => {
+                exec( loc )
+            } ).catch( () => {
+                console.log( "Going the slow route" )
+                return executor()
+            } )
+    }
+}
 
 if ( argv.includes( '-h' ) || argv.includes( '--help' ) || command == 'help' ) {
 
@@ -66,7 +84,7 @@ if ( argv.includes( '-h' ) || argv.includes( '--help' ) || command == 'help' ) {
 
 } else {
     if ( !module.parent && command == null ) {
-        run( 'hud' )
+        obj.display()
     } else {
         obj[ command ]()
     }

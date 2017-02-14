@@ -10,10 +10,15 @@ const simple = require( './simpleTask' ),
                 spawn( "kill", [ data ] )
             } );
         }, 20 )
+
+    },
+    singleRun = () => {
+        run()
+        simple( 'quit' )
     }
 if ( !module.parent ) {
-    run()
-    simple( 'quit' )
+    singleRun()
 }
 
 module.exports = run
+module.exports.singleRun = singleRun

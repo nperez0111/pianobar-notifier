@@ -16,11 +16,8 @@ const logToCtl = require( './logToCtl' ),
     simple = require( './simpleTask' )
 
 const run = () =>
-    logToCtl( 'playPauseSong' )
-
-
-if ( !module.parent ) {
-
+    logToCtl( 'playPauseSong' ),
+    singleRun = () =>
     loadJson( file ).then( state => state.playing ).then( isPlaying =>
         run()
         .then( () => writeJson( file, { playing: !isPlaying } ) )
@@ -47,9 +44,16 @@ if ( !module.parent ) {
         } )
     } )
 
+
+
+if ( !module.parent ) {
+
+    singleRun()
+
 }
 
 module.exports = run
 module.exports.clear = () => {
     return writeJson( file, { playing: true } )
 }
+module.exports.singleRun = singleRun

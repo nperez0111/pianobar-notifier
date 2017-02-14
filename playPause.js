@@ -43,7 +43,7 @@ const run = () => checkIfOn( () => logToCtl( 'playPauseSong' ) ),
             return run()
                 .then( () => writeJson( file, { playing: action } ) ).then( () => action )
         } ).then( isPlaying => {
-            simple( isPlaying ? 'isPlaying' : 'isPaused', {
+            return simple( isPlaying ? 'isPlaying' : 'isPaused', {
                 activate: action => {
                     ifHasElseDefaultAction( {
                         pauseTrack: () => {
@@ -62,7 +62,7 @@ const run = () => checkIfOn( () => logToCtl( 'playPauseSong' ) ),
             }, {
                 actions: isPlaying ? 'Pause Track' : 'Play Track'
             } )
-            return null
+
         } ) )
     }
 

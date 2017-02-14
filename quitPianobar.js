@@ -1,14 +1,17 @@
 #!/usr/bin/env node
 
 const simple = require( './simpleTask' ),
-    spawn = require( 'child_process' ).spawn,
+    execa = require( 'execa' ),
+    pid = require( './isPianobarOn' ),
     run = () => {
         simple.run( 'quit' )
         setTimeout( function () {
-            const pidof = spawn( 'pidof', [ "pianobar" ] )
-            pidof.stdout.on( 'data', ( data ) => {
-                spawn( "kill", [ data ] )
-            } );
+            pid().then( pid => {
+                execa( 'kill', [ pid ] )
+            } ).catch( () => {
+                //couldn't find pid lets just do this again to try to kill it
+                simple.run( 'quit' )
+            } )
         }, 20 )
 
     },

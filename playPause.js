@@ -17,32 +17,46 @@ const logToCtl = require( './logToCtl' ),
 
 const run = () =>
     logToCtl( 'playPauseSong' ),
+
     singleRun = () =>
     loadJson( file ).then( state => state.playing ).then( isPlaying =>
         run()
         .then( () => writeJson( file, { playing: !isPlaying } ) )
         .then( () => !isPlaying )
     ).then( isPlaying => {
-        simple( isPlaying ? 'isPlaying' : 'isPaused', {
-            activate: action => {
-                ifHasElseDefaultAction( {
-                    pauseTrack: () => {
-                        console.log( "Pausing Track..." )
-                        run()
-                    },
-                    playTrack: () => {
-                        console.log( "Playing Track..." )
-                        run()
-                    },
-                    defaultAction: ( a ) => {
-                        console.log( "Action not accounted for", a )
-                    }
-                }, camelCase( action.activationValue ) )
+        return playOrPause( isPlaying )
+    } ),
+
+    playOrPause = action => {
+        return loadJson( file ).then( state => state.playing ).then( isPlaying => {
+            if ( isPlaying === action ) {
+                console.log( 'Is already doing the action specified' )
+                return action
             }
-        }, {
-            actions: isPlaying ? 'Pause Track' : 'Play Track'
+            return run()
+                .then( () => writeJson( file, { playing: action } ) ).then( () => action )
+        } ).then( isPlaying => {
+            return simple( isPlaying ? 'isPlaying' : 'isPaused', {
+                activate: action => {
+                    ifHasElseDefaultAction( {
+                        pauseTrack: () => {
+                            console.log( "Pausing Track..." )
+                            run()
+                        },
+                        playTrack: () => {
+                            console.log( "Playing Track..." )
+                            run()
+                        },
+                        defaultAction: ( a ) => {
+                            console.log( "Action not accounted for", a )
+                        }
+                    }, camelCase( action.activationValue ) )
+                }
+            }, {
+                actions: isPlaying ? 'Pause Track' : 'Play Track'
+            } )
         } )
-    } )
+    }
 
 
 
@@ -57,3 +71,5 @@ module.exports.clear = () => {
     return writeJson( file, { playing: true } )
 }
 module.exports.singleRun = singleRun
+module.exports.play = () => playOrPause( true )
+module.exports.pause = () => playOrPause( false )

@@ -37,6 +37,14 @@ const commandLineCommands = require( 'command-line-commands' ),
             run( 'selectStations', require( './selectStations' ).singleRun ),
         playPause: () =>
             run( 'playPause', require( './playPause' ).singleRun ),
+        play: () => {
+            const playPause = require( './playPause' )
+            playPause.play()
+        },
+        pause: () => {
+            const playPause = require( './playPause' )
+            playPause.pause()
+        },
         display: () =>
             run( 'hud', require( './hud' ) ),
         settings: () =>

@@ -1,29 +1,29 @@
 {
-  "name": "pianobar-notifier",
-  "version": "1.0.5",
-  "description": "Allows you to interact with Pianobar through notifications and this CLI",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "bin": {
-    "notifier": "./index.js"
-  },
-  "author": "Nick The Sick",
-  "license": "ISC",
-  "dependencies": {
-    "camelcase": "^4.0.0",
-    "command-line-commands": "^2.0.0",
-    "command-line-usage": "^4.0.0",
-    "execa": "^0.6.0",
-    "file-exists": "^3.0.1",
-    "homedir": "^0.6.0",
-    "image-downloader": "^2.0.3",
-    "inquirer": "^3.0.1",
-    "is-global": "^0.1.0",
-    "load-json-file": "^2.0.0",
-    "node-notifier": "^5.0.2",
-    "pidof": "^1.0.2",
-    "write-json-file": "^2.0.0"
-  }
+    "name": "pianobar-notifier",
+    "version": "1.0.6",
+    "description": "Allows you to interact with Pianobar through notifications and this CLI",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "bin": {
+        "notifier": "./index.js"
+    },
+    "author": "Nick The Sick",
+    "license": "ISC",
+    "dependencies": {
+        "camelcase": "^4.0.0",
+        "command-line-commands": "^2.0.0",
+        "command-line-usage": "^4.0.0",
+        "execa": "^0.6.0",
+        "file-exists": "^3.0.1",
+        "homedir": "^0.6.0",
+        "image-downloader": "^2.0.3",
+        "inquirer": "^3.0.1",
+        "is-global": "^0.1.0",
+        "load-json-file": "^2.0.0",
+        "node-notifier": "^5.0.2",
+        "pidof": "^1.0.2",
+        "write-json-file": "^2.0.0"
+    }
 }

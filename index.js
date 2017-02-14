@@ -1,4 +1,4 @@
-#!/usr/bin/node
+#!/usr/bin/env node
 
 const run = a => {
     var cp = require( 'child_process' );

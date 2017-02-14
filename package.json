@@ -1,6 +1,6 @@
 {
     "name": "pianobar-installer",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "",
     "main": "index.js",
     "scripts": {
@@ -12,7 +12,8 @@
         "dislikeSong": "./dislikeSong.js",
         "selectStation": "./selectStation.js",
         "nextSong": "./nextSong.js",
-        "quit": "./quitPianobar.js"
+        "quit": "./quitPianobar.js",
+        "settings": "./settings.js"
     },
     "author": "",
     "license": "ISC",

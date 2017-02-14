@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const logToCtl = require( './logToCtl' ),
     notifier = require( './notifications' ),
     loadJson = require( 'load-json-file' ),

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const loadJsonFile = require( 'load-json-file' ),
     writeJSON = require( 'write-json-file' ),
     inquirer = require( 'inquirer' ),

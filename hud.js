@@ -1,4 +1,4 @@
-#!/usr/bin/node
+#!/usr/bin/env node
 
 const notifier = require( './notifications' ),
     imageDownloader = require( 'image-downloader' ),

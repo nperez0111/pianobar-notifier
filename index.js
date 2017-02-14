@@ -9,6 +9,7 @@ const commandLineCommands = require( 'command-line-commands' ),
         header: 'Command List',
         content: [
             { name: '[bold]{No Params}', summary: 'Displays the current song being played.' },
+            { name: '[bold]{start}', summary: 'Starts Pianobar.' },
             { name: '[bold]{help}', summary: 'Display help information about this app.' },
             { name: '[bold]{likeSong}', summary: 'Likes the current song being played.' },
             { name: '[bold]{dislikeSong}', summary: 'Dislikes the current song being played.' },
@@ -43,6 +44,9 @@ const commandLineCommands = require( 'command-line-commands' ),
             const playPause = require( './playPause' )
             playPause.clear()
         },
+        start: () => {
+            run( 'start' )
+        },
         help: () => {
             console.log( usage )
         }
@@ -51,8 +55,9 @@ const commandLineCommands = require( 'command-line-commands' ),
     { command, argv } = commandLineCommands( validCommands ),
     run = a => {
         var cp = require( 'child_process' );
-        var child = cp.spawn( 'node', [ ( process.argv[ 2 ] || a ) + '.js' ], { detached: true, stdio: [ 'ignore', 'ignore', 'ignore' ] } );
+        var child = cp.spawn( 'node', [ a + '.js' ], { detached: true, stdio: [ 'ignore', 'ignore', 'ignore' ] } );
         child.unref();
+
     }
 
 if ( argv.includes( '-h' ) || argv.includes( '--help' ) || command == 'help' ) {

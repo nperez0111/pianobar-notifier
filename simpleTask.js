@@ -8,7 +8,7 @@ module.exports = ( key, obj = {}, another = {} ) => {
         const [ message, settings ] = all
 
         return notifier( Object.assign( {
-            wait: false,
+            timeout: 5,
             icon: settings.icon
         }, message[ key ], another ), Object.assign( { defaultAction: () => {}, 'undefined': () => {} }, obj ) )
     } ).catch( a => { console.error( a ) } )

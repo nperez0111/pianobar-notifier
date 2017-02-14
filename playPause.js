@@ -38,13 +38,12 @@ const run = () => checkIfOn( () => logToCtl( 'playPauseSong' ) ),
     playOrPause = action => {
         return checkIfOn( () => loadJson( file ).then( state => state.playing ).then( isPlaying => {
             if ( isPlaying === action ) {
-                console.log( 'Is already doing the action specified' )
                 return action
             }
             return run()
                 .then( () => writeJson( file, { playing: action } ) ).then( () => action )
         } ).then( isPlaying => {
-            return simple( isPlaying ? 'isPlaying' : 'isPaused', {
+            simple( isPlaying ? 'isPlaying' : 'isPaused', {
                 activate: action => {
                     ifHasElseDefaultAction( {
                         pauseTrack: () => {
@@ -63,6 +62,7 @@ const run = () => checkIfOn( () => logToCtl( 'playPauseSong' ) ),
             }, {
                 actions: isPlaying ? 'Pause Track' : 'Play Track'
             } )
+            return null
         } ) )
     }
 

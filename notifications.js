@@ -1,5 +1,5 @@
 const notifier = require( 'node-notifier' ),
-    log = require( './debug.js' )
+    log = () => true
 module.exports = ( notifyObj, actions = {
     replied: function ( a ) {
         log( "Let's do something with this", val )

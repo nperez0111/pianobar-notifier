@@ -5,7 +5,8 @@ const notifier = require( './notifications' ),
     ctl = require( './logToCtl' ),
     loadJsonFile = require( 'load-json-file' ),
     getStations = require( './getStations' ),
-    simple = require( './simpleTask' )
+    simple = require( './simpleTask' ),
+    findAbs = require( './shared' ).findAbs
 
 const actions = {
     replied: function ( a ) {
@@ -39,7 +40,7 @@ const actions = {
 
 const run = () => {
 
-    return loadJsonFile( '/Users/nickthesick/.config/pianobar/cur.json' ).then( cur => {
+    return findAbs( 'cur.json' ).then( file => loadJsonFile( file ) ).then( cur => {
 
         return simple( 'selectStation', actions, { actions: getStations( cur ) } )
 

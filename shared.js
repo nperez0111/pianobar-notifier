@@ -1,7 +1,7 @@
 const fileExists = require( 'file-exists' ),
     execa = require( 'execa' ),
     isLocal = () => {
-        return fileExists.sync( 'hud.js' )
+        return fileExists.sync( 'isPianobarOn.js' )
     },
     findRel = rel => {
         if ( isLocal() ) {
@@ -10,11 +10,18 @@ const fileExists = require( 'file-exists' ),
 
         return execa.stdout( 'npm', [ 'root', '-g' ] )
             .then( loc => loc + '/pianobar-notifier/' + rel )
-            .catch( rel => {
+            .catch( re => {
                 throw rel
             } )
 
+    },
+    homedir = require( 'homedir' )(),
+    pianoDir = homedir + '/.config/pianobar/',
+    findAbs = file => {
+        return Promise.resolve( pianoDir + file )
     }
 module.exports = {
-    findRel: findRel
+    findRel: findRel,
+    pianoDir: pianoDir,
+    findAbs: findAbs
 }

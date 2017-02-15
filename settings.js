@@ -3,8 +3,9 @@
 const loadJsonFile = require( 'load-json-file' ),
     writeJSON = require( 'write-json-file' ),
     inquirer = require( 'inquirer' ),
-    homedir = require( 'homedir' ),
-    dir = homedir(),
+    shared = require( './shared' ),
+    pianoDir = shared.pianoDir,
+    findAbs = shared.findAbs,
     questions = [ {
         type: 'list',
         name: 'onClickDo',
@@ -107,8 +108,8 @@ const loadJsonFile = require( 'load-json-file' ),
                     open: 'url'
                 }
             }
-            change( 'Icon', 'icon', dir + '/.config/pianobar/PandoraIco.png' )
-            change( 'Fifo', 'ctlLoc', dir + '/.config/pianobar/ctl' )
+            change( 'Icon', 'icon', pianoDir + 'PandoraIco.png' )
+            change( 'Fifo', 'ctlLoc', pianoDir + 'ctl' )
 
             obj.timing = answers.timing
 
@@ -121,9 +122,9 @@ const loadJsonFile = require( 'load-json-file' ),
                 message: "Does this look about right?"
             } ] ).then( answer => {
                 if ( answer.look ) {
-                    writeJSON( 'settings.json', obj ).then( () => {
+                    findAbs( 'settings.json' ).then( file => writeJSON( file, obj ) ).then( () => {
                         console.log( "Success!" )
-                    } ).catch( a => { console.log( "Something happened...", a ) } )
+                    } ).catch( a => { console.log( "Writing file failed...", a ) } )
                 } else {
                     console.log( "Well... load it up again!" )
                 }

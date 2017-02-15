@@ -15,21 +15,23 @@ const notifier = require( './notifications' ),
     },
     selectStation = require( './selectStation' ),
     nextSong = require( './nextSong' ),
+    pauseSong = require( './playPause' ).pause,
     likeSong = require( './likeSong' ),
     dislikeSong = require( './dislikeSong' ),
     quit = require( './quitPianobar' ),
+    shared = require( './shared' ),
+    findAbs = shared.findAbs,
     run = () => {
-        //get the stdin to parse all the info out
-        loadJsonFile( 'settings.json' ).then( json => {
 
-            loadJsonFile( '/Users/nickthesick/.config/pianobar/cur.json' ).then( prefs => {
+        return findAbs( 'settings.json' ).then( settings => loadJsonFile( settings ) ).then( json => {
+
+            findAbs( 'cur.json' ).then( file => loadJsonFile( file ) ).then( prefs => {
 
 
-                ( ( { albumArt, song, album, radio, artist, icon, url, timing } ) => ( new Promise( function ( resolve, error ) {
+                ( ( { albumArt, song, album, radio, artist, icon, url, timing } ) => findAbs( 'albumArt.jpg' ).catch( a => process.cwd() + a ).then( file => ( new Promise( function ( resolve, error ) {
                     imageDownloader( {
                         url: albumArt,
-                        dest: ( process.cwd() +
-                            '/albumArt.jpg' ),
+                        dest: file,
                         done: function ( err, filename, image ) {
                             if ( err ) {
                                 error( err )
@@ -37,7 +39,7 @@ const notifier = require( './notifications' ),
                             resolve( filename )
                         }
                     } )
-                } ) ).then( filename => {
+                } ) ) ).then( filename => {
 
                     notifier( {
                         title: song,
@@ -47,11 +49,8 @@ const notifier = require( './notifications' ),
                         contentImage: filename,
                         closeLabel: "Quit",
                         timeout: timing,
-                        actions: [ 'Next Song', 'Like Song', 'Dislike Song', 'Select Station' ]
+                        actions: [ 'Next Song', 'Pause Song', 'Like Song', 'Dislike Song', 'Select Station' ]
                     }, {
-                        timeout: function () {
-                            console.log( 'timed out' )
-                        },
                         closed: function () {
                             console.log( 'quitting' )
                             quit()
@@ -94,6 +93,9 @@ const notifier = require( './notifications' ),
                                         selectStation: () => {
                                             selectStation()
                                         },
+                                        pauseSong: () => {
+                                            pauseSong()
+                                        },
                                         defaultAction: () => {
                                             //nothing needed
                                         }
@@ -104,7 +106,7 @@ const notifier = require( './notifications' ),
                         }
                     } )
 
-                } ).catch( err => { console.err( err ) } ) )( {
+                } ).catch( err => { console.log( err ) } ) )( {
                     albumArt: prefs.coverArt,
                     url: prefs.detailUrl,
                     artist: prefs.artist,

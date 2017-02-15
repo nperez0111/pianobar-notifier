@@ -19,7 +19,7 @@ const log = require( './debug.js' ),
     ctl = loadJson( 'settings.json' )
     .then( settings => settings.ctlLoc )
     .then( ctlLoc => logToAFile( ctlLoc ) )
-    .catch( a => { console.log( "Check the directory specified in 'ctlLoc' the settings.json file it may not exist" ) } ),
+    .catch( a => { console.log( "Error: Whoops...\nTry running `notifier settings` to regenerate the settings file." ) } ),
     symbol = require( './mappings' )
 
 

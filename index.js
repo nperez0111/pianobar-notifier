@@ -32,7 +32,8 @@ const commandLineCommands = require( 'command-line-commands' ),
         next: () =>
             run( 'nextSong', require( './nextSong' ).singleRun ),
         quit: () => {
-            return require( './quitPianobar' ).singleRun() },
+            return require( './quitPianobar' ).singleRun()
+        },
         selectStations: () =>
             run( 'selectStations', require( './selectStations' ).singleRun ),
         playPause: () =>
@@ -58,6 +59,9 @@ const commandLineCommands = require( 'command-line-commands' ),
         },
         help: () => {
             console.log( usage )
+        },
+        login: () => {
+            require( './simpleTask' )( 'login' )
         }
     },
     validCommands = [ null ].concat( Object.keys( obj ) ),

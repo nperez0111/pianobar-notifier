@@ -28,5 +28,9 @@
         "message": "What Station would you like to play?",
         "reply": true,
         "timeout": 30
+    },
+    "login": {
+        "title": "Welcome Back!",
+        "message": "Let's get you some music."
     }
 }

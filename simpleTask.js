@@ -1,10 +1,11 @@
 const logToCtl = require( './logToCtl' ),
     notifier = require( './notifications' ),
-    loadJson = require( 'load-json-file' )
+    loadJson = require( 'load-json-file' ),
+    findRel = require( './shared' ).findRel
 
 
 module.exports = ( key, obj = {}, another = {} ) => {
-    return Promise.all( [ loadJson( 'messages.json' ), loadJson( 'settings.json' ) ] ).then( all => {
+    return Promise.all( [ 'messages.json', 'settings.json' ].map( json => findRel( json ) ).map( a => a.then( b => loadJson( b ) ) ) ).then( all => {
         const [ message, settings ] = all
 
         return notifier( Object.assign( {

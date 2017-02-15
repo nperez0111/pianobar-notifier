@@ -70,29 +70,18 @@ const commandLineCommands = require( 'command-line-commands' ),
     },
     validCommands = [ null ].concat( Object.keys( obj ) ),
     { command, argv } = commandLineCommands( validCommands ),
-    fileExists = require( 'file-exists' ),
-    isLocal = () => {
-        return fileExists.sync( 'hud.js' )
-    },
+    shared = require( './shared' ),
+    findRel = shared.findRel,
     exec = file => {
         var cp = require( 'child_process' );
         var child = cp.spawn( 'node', [ file + '.js' ], { detached: true, stdio: [ 'ignore', 'ignore', 'ignore' ] } );
         child.unref();
+    },
+    run = ( file, executor ) => {
+        findRel( file ).then( abs => {
+            exec( abs )
+        } ).catch( executor )
     }
-run = ( file, executor ) => {
-    if ( isLocal() ) {
-        exec( file )
-    } else {
-        execa.stdout( 'npm', [ 'root', '-g' ] )
-            .then( loc => loc + '/pianobar-notifier/' + file )
-            .then( loc => {
-                exec( loc )
-            } ).catch( () => {
-                console.log( "Going the slow route" )
-                return executor()
-            } )
-    }
-}
 
 if ( argv.includes( '-h' ) || argv.includes( '--help' ) || command == 'help' ) {
 

@@ -69,7 +69,6 @@ const commandLineCommands = require( 'command-line-commands' ),
         }
     },
     validCommands = [ null ].concat( Object.keys( obj ) ),
-    { command, argv } = commandLineCommands( validCommands ),
     shared = require( './shared' ),
     findRel = shared.findRel,
     exec = file => {
@@ -82,6 +81,16 @@ const commandLineCommands = require( 'command-line-commands' ),
             exec( abs )
         } ).catch( executor )
     }
+
+let command = null,
+    argv = [ '-h' ];
+try {
+    const l = commandLineCommands( validCommands )
+    command = l.command
+    argv = l.argv
+} catch ( e ) {
+    console.log( "Invalid Command... " )
+}
 
 if ( argv.includes( '-h' ) || argv.includes( '--help' ) || command == 'help' ) {
 

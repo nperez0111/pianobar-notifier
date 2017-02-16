@@ -17,6 +17,7 @@
     "command-line-usage": "^4.0.0",
     "execa": "^0.6.0",
     "file-exists": "^3.0.1",
+    "get-stdin": "^5.0.1",
     "homedir": "^0.6.0",
     "image-downloader": "^2.0.3",
     "inquirer": "^3.0.1",

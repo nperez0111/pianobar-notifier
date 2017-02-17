@@ -38,8 +38,8 @@ const commandLineCommands = require( 'command-line-commands' ),
         quit: () => {
             return require( './quitPianobar' ).singleRun()
         },
-        selectStations: () =>
-            run( 'selectStations', require( './selectStations' ).singleRun ),
+        selectStation: () =>
+            run( 'selectStation', require( './selectStation' ).singleRun ),
         playPause: () =>
             run( 'playPause', require( './playPause' ).singleRun ),
         play: () => {

@@ -32,6 +32,8 @@ const getStdin = require( 'get-stdin' ),
         },
         songstart: () => {
             console.log( 'songstart' )
+            handleCommands.clearPlaying()
+            handleCommands.display()
 
         },
         songfinish: () => {

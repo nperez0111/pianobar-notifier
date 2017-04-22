@@ -25,6 +25,7 @@
     "load-json-file": "^2.0.0",
     "node-notifier": "^5.0.2",
     "pidof": "^1.0.2",
+    "run-node": "^0.1.1",
     "write-json-file": "^2.0.0"
   }
 }

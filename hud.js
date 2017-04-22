@@ -19,13 +19,12 @@ const notifier = require( './notifications' ),
     likeSong = require( './likeSong' ),
     dislikeSong = require( './dislikeSong' ),
     quit = require( './quitPianobar' ),
-    shared = require( './shared' ),
-    findAbs = shared.findAbs,
+    { findAbs } = require( './shared' ),
     run = () => {
 
         return findAbs( 'settings.json' ).then( settings => loadJsonFile( settings ) ).then( json => {
 
-            findAbs( 'cur.json' ).then( file => loadJsonFile( file ) ).then( prefs => {
+            return findAbs( 'cur.json' ).then( file => loadJsonFile( file ) ).then( prefs => {
 
 
                 ( ( { albumArt, song, album, radio, artist, icon, url, timing } ) => findAbs( 'albumArt.jpg' ).catch( a => process.cwd() + a ).then( file => ( new Promise( function ( resolve, error ) {
@@ -116,10 +115,18 @@ const notifier = require( './notifications' ),
                     icon: json.icon,
                     timing: json.timing
                 } )
+            } ).catch( err => {
+                process.exit( 1 )
+                return 0;
             } )
+        } ).catch( err => {
+            console.error( "cant find settings.json" )
+            process.exit( 1 )
+            return 0
         } )
     }
 if ( !module.parent ) {
     run()
+
 }
 module.exports = run

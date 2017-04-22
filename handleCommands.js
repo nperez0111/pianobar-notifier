@@ -69,8 +69,7 @@ const commandLineCommands = require( 'command-line-commands' ),
         }
     },
     validCommands = [ null ].concat( Object.keys( obj ) ),
-    shared = require( './shared' ),
-    findRel = shared.findRel,
+    { findRel, log } = require( './shared' ),
     exec = file => {
         var cp = require( 'child_process' );
         var child = cp.spawn( 'node', [ file + '.js' ], { detached: true, stdio: [ 'ignore', 'ignore', 'ignore' ] } );
@@ -78,10 +77,12 @@ const commandLineCommands = require( 'command-line-commands' ),
     },
     run = ( file, executor ) => {
         findRel( file ).then( abs => {
+            log( abs )
             exec( abs )
         } ).catch( executor )
     },
     main = args => {
+        log( "here" )
         var command = null,
             argv = [ '-h' ];
         try {
@@ -90,6 +91,7 @@ const commandLineCommands = require( 'command-line-commands' ),
         } catch ( e ) {
             console.log( "Invalid Command... " )
         }
+        log( 'some' );
 
         if ( argv.includes( '-h' ) || argv.includes( '--help' ) || command == 'help' ) {
 
@@ -97,11 +99,13 @@ const commandLineCommands = require( 'command-line-commands' ),
 
         } else {
             if ( command == null ) {
+                log( 'eg' )
                 obj.display()
             } else {
                 obj[ command ]()
             }
         }
+        log( 'aww' );
     }
 if ( !module.parent ) {
     main()

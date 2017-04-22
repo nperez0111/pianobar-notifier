@@ -19,9 +19,24 @@ const fileExists = require( 'file-exists' ),
     pianoDir = homedir + '/.config/pianobar/',
     findAbs = file => {
         return Promise.resolve( pianoDir + file )
-    }
+    },
+    createObj = ( keys, values ) => {
+        var ret = {};
+        if ( Array.isArray( keys ) && Array.isArray( values ) ) {
+            keys.forEach( function ( cur, i ) {
+                ret[ cur ] = values[ i ];
+            } );
+
+        } else {
+            ret[ keys ] = values;
+        }
+        return ret;
+    },
+    log = require( './debug.js' )
 module.exports = {
-    findRel: findRel,
-    pianoDir: pianoDir,
-    findAbs: findAbs
+    findRel,
+    pianoDir,
+    findAbs,
+    createObj,
+    log
 }

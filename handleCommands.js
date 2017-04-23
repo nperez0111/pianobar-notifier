@@ -9,7 +9,7 @@ const commandLineCommands = require( 'command-line-commands' ),
     }, {
         header: 'Command List',
         content: [
-            { name: '[bold]{No Params}', summary: 'Displays the current song being played.' },
+            { name: '[bold]{No Params}', summary: 'Displays the current song being played. Or if pianobar is closed will start pianobar' },
             { name: '[bold]{display}', summary: 'Same as above.' },
             { name: '[bold]{start}', summary: 'Starts Pianobar.' },
             { name: '[bold]{help}', summary: 'Display help information about this app.' },
@@ -23,6 +23,7 @@ const commandLineCommands = require( 'command-line-commands' ),
             { name: '[bold]{pause}', summary: 'Pauses the current song if playing.' },
             { name: '[bold]{settings}', summary: 'Allows you to change some settings of the notifications.' },
             { name: '[bold]{login}', summary: 'Shows login message.' },
+            { name: '[bold]{isOn}', summary: 'exits with 0 if on and exits 1 if not on' },
             { name: '[bold]{quit}', summary: 'Quits Pianobar' }
         ]
     } ] ),
@@ -67,6 +68,13 @@ const commandLineCommands = require( 'command-line-commands' ),
         },
         login: () => {
             require( './simpleTask' )( 'login' )
+        },
+        isOn: () => {
+            require( './isPianobarOn' )().then( () => {
+                process.exit( 0 );
+            } ).catch( () => {
+                process.exit( 1 )
+            } )
         }
     },
     validCommands = [ null ].concat( Object.keys( obj ) ),
@@ -98,7 +106,9 @@ const commandLineCommands = require( 'command-line-commands' ),
         } else {
             if ( command == null ) {
                 //log( 'No command provided...' )
-                obj.display()
+                require( './isPianobarOn' )().then( () => obj.display() ).catch( () => {
+                    obj.start()
+                } )
             } else {
                 obj[ command ]()
             }

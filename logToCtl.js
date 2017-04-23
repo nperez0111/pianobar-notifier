@@ -16,9 +16,10 @@ const log = require( './debug.js' ),
             }
         }
     },
-    ctl = loadJson( 'settings.json' )
-    .then( settings => settings.ctlLoc )
-    .then( ctlLoc => logToAFile( ctlLoc ) )
+    { findAbs } = require( './shared' ),
+    ctl = findAbs( 'settings.json' ).then( loc => loadJson( loc )
+        .then( settings => settings.ctlLoc )
+        .then( ctlLoc => logToAFile( ctlLoc ) ) )
     .catch( a => { console.log( "Error: Whoops...\nTry running `notifier settings` to regenerate the settings file." ) } ),
     symbol = require( './mappings' )
 

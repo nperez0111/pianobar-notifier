@@ -116,13 +116,10 @@ const notifier = require( './notifications' ),
                     timing: json.timing
                 } )
             } ).catch( err => {
-                process.exit( 1 )
-                return 0;
+                console.log( "Can't find some file.." )
             } )
         } ).catch( err => {
-            console.error( "cant find settings.json" )
-            process.exit( 1 )
-            return 0
+            console.error( "Whoops cant find your settings try regenerating them by running notifier settings" )
         } )
     }
 if ( !module.parent ) {

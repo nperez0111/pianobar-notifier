@@ -69,7 +69,7 @@ if ( !module.parent ) {
             obj.default( command )
         }
     } ).catch( () => {
-        log( "didnt work" )
+
         handleCommands.main( process.argv )
     } )
 }

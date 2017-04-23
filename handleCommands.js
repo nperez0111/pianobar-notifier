@@ -50,8 +50,9 @@ const commandLineCommands = require( 'command-line-commands' ),
             const playPause = require( './playPause' )
             playPause.pause()
         },
-        display: () =>
-            run( 'hud', require( './hud' ) ),
+        display: () => {
+            run( 'hud', require( './hud' ) )
+        },
         settings: () =>
             require( './settings' )(),
         clearPlaying: () => {
@@ -77,12 +78,10 @@ const commandLineCommands = require( 'command-line-commands' ),
     },
     run = ( file, executor ) => {
         findRel( file ).then( abs => {
-            log( abs )
             exec( abs )
         } ).catch( executor )
     },
     main = args => {
-        log( "here" )
         var command = null,
             argv = [ '-h' ];
         try {
@@ -91,7 +90,6 @@ const commandLineCommands = require( 'command-line-commands' ),
         } catch ( e ) {
             console.log( "Invalid Command... " )
         }
-        log( 'some' );
 
         if ( argv.includes( '-h' ) || argv.includes( '--help' ) || command == 'help' ) {
 
@@ -99,17 +97,18 @@ const commandLineCommands = require( 'command-line-commands' ),
 
         } else {
             if ( command == null ) {
-                log( 'eg' )
+                //log( 'No command provided...' )
                 obj.display()
             } else {
                 obj[ command ]()
             }
         }
-        log( 'aww' );
     }
 if ( !module.parent ) {
     main()
 }
-
+process.on( 'unhandledRejection', ( reason ) => {
+    console.log( 'Reason: ' + reason );
+} );
 module.exports = obj
 module.exports.main = args => main( Array.from( args ).slice( 2 ) )

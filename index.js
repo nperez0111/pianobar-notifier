@@ -25,6 +25,7 @@ const getStdin = require( 'get-stdin' ),
     obj = {
         userlogin: () => {
             handleCommands.login()
+            handleCommands.clearPlaying()
         },
         usergetstations: () => {
             //console.log( 'usergetstations' )

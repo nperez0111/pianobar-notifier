@@ -13,8 +13,8 @@ const commandLineCommands = require( 'command-line-commands' ),
             { name: '[bold]{display}', summary: 'Same as above.' },
             { name: '[bold]{start}', summary: 'Starts Pianobar.' },
             { name: '[bold]{help}', summary: 'Display help information about this app.' },
-            { name: '[bold]{likeSong}', summary: 'Likes the current song being played.' },
-            { name: '[bold]{dislikeSong}', summary: 'Dislikes the current song being played.' },
+            { name: '[bold]{like[Song]}', summary: 'Likes the current song being played.' },
+            { name: '[bold]{dislike[Song]}', summary: 'Dislikes the current song being played.' },
             { name: '[bold]{nextSong}', summary: 'Plays the next song on Pianobar' },
             { name: '[bold]{selectStation}', summary: 'Brings up notification to change the current station to the one you input.' },
             { name: '[bold]{clearPlaying}', summary: 'If the now playing keeps saying it is paused run this and it will reset.' },
@@ -30,6 +30,10 @@ const commandLineCommands = require( 'command-line-commands' ),
     obj = {
         likeSong: () =>
             run( 'likeSong', require( './likeSong' ).singleRun ),
+        like: () =>
+            run( 'likeSong', require( './likeSong' ).singleRun ),
+        dislike: () =>
+            run( 'dislikeSong', require( './dislikeSong' ).singleRun ),
         dislikeSong: () =>
             run( 'dislikeSong', require( './dislikeSong' ).singleRun ),
         nextSong: () =>

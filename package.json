@@ -1,6 +1,6 @@
 {
     "name": "pianobar-notifier",
-    "version": "1.0.11",
+    "version": "1.0.12",
     "description": "Allows you to interact with Pianobar through notifications and this CLI",
     "main": "index.js",
     "scripts": {

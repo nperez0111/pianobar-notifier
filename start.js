@@ -3,8 +3,12 @@ const exec = ( proc, args = [] ) => {
         var child = cp.spawn( proc, args, { detached: true, stdio: [ 'ignore', 'ignore', 'ignore' ] } );
         child.unref();
     },
+    isOn = require( './isPianobarOn' ),
     run = () => {
-        exec( 'pianobar' )
+        isOn().then( () => {
+            const pianobar = require( './playPause' )
+            pianobar.play()
+        } ).catch( () => { exec( 'pianobar' ) } )
     }
 if ( !module.parent ) {
     run()

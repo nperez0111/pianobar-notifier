@@ -1,5 +1,6 @@
 # Pianobar-Notifier
 
+### Check out [my installer](https://github.com/nperez0111/pianobar-installer-js) OR my [other installer](https://github.com/nperez0111/pianobar-installer)
 ## Purpose of this project
 To give notifications of the current state of pianobar, the console player for pandora. Also allows you to interact with pianobar via the notification bubbles allowing you to choose stations like dislike and skip songs.
 ### Nitty-Gritty

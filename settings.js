@@ -33,8 +33,8 @@ const loadJsonFile = require( 'load-json-file' ),
             value: 'com.apple.terminal'
         }, {
             key: 'h',
-            name: 'HyperTerm',
-            value: 'co.zeit.hyperterm'
+            name: 'Hyper',
+            value: 'co.zeit.hyper'
         }, {
             key: 'o',
             name: 'Other',

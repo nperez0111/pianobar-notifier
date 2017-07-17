@@ -71,7 +71,7 @@ const commandLineCommands = require( 'command-line-commands' ),
             console.log( usage )
         },
         login: () => {
-            require( './simpleTask' )( 'login' )
+            run( 'login', require( './login' ).singleRun )
         },
         isOn: () => {
             require( './isPianobarOn' )().then( () => {

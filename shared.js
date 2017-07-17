@@ -1,18 +1,11 @@
-const fileExists = require( 'file-exists' ),
+const
     execa = require( 'execa' ),
-    isLocal = () => {
-        return fileExists.sync( 'isPianobarOn.js' )
-    },
-    resolveGlobal = require( 'resolve-global' ),
     findRel = rel => {
-        if ( isLocal() ) {
-            return Promise.resolve( rel )
-        }
-        const path = resolveGlobal.silent( 'pianobar-notifier' )
-        if ( path == null ) {
+        try {
+            return Promise.resolve( require.resolve( rel ) )
+        } catch ( err ) {
             return Promise.reject( rel )
         }
-        return Promise.resolve( path + '/' + rel )
 
     },
     homedir = require( 'homedir' )(),

@@ -85,17 +85,13 @@ const commandLineCommands = require( 'command-line-commands' ),
     },
     validCommands = [ null ].concat( Object.keys( obj ) ),
     { findRel, log } = require( './shared' ),
-    exec = file => {
+    exec = path => {
         const cp = require( 'child_process' ),
-            resolveGlobal = require( 'resolve-global' ),
-            path = `${(resolveGlobal.silent( 'pianobar-notifier' )||'.')}/${file}.js`
-            //console.log( path )
-            //console.log( resolveGlobal( 'pianobar-notifier' ) )
-        const child = cp.spawn( 'node', [ path ], { detached: true, stdio: [ 'ignore', 'ignore', 'ignore' ] } );
+            child = cp.spawn( 'node', [ path ], { detached: true, stdio: [ 'ignore', 'ignore', 'ignore' ] } );
         child.unref();
     },
     run = ( file, executor ) => {
-        findRel( file ).then( abs => {
+        findRel( './' + file + '.js' ).then( abs => {
             exec( abs )
         } ).catch( executor )
     },

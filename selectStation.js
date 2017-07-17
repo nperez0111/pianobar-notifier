@@ -6,7 +6,7 @@ const notifier = require( './notifications' ),
     loadJsonFile = require( 'load-json-file' ),
     getStations = require( './getStations' ),
     simple = require( './simpleTask' ),
-    findAbs = require( './shared' ).findAbs
+    { findAbs } = require( './shared' )
 
 const actions = {
     replied: function ( a ) {

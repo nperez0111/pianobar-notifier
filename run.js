@@ -13,7 +13,7 @@ pianobar.stdout.on( 'data', function ( data ) {
     var get = /(\d\d:\d\d).(\d\d:\d\d)/
     if ( get.test( data ) ) {
         const [ now, ofTotal ] = Array.from( data.match( get ) ).slice( 1 )
-        findRel( 'nowPlaying.json' ).then( nowPlaying => writeJson( nowPlaying, { current: now, ofTotal: ofTotal } ) )
+        findRel( './nowPlaying.json' ).then( nowPlaying => writeJson( nowPlaying, { current: now, ofTotal: ofTotal } ) )
     } else {
         console.log( data )
     }

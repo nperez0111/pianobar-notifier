@@ -87,7 +87,7 @@ const commandLineCommands = require( 'command-line-commands' ),
     { findRel, log } = require( './shared' ),
     exec = path => {
         const cp = require( 'child_process' ),
-            child = cp.spawn( 'node', [ path ], { detached: true, stdio: [ 'ignore', 'ignore', 'ignore' ] } );
+            child = cp.spawn( require.resolve( './node_modules/.bin/run-node' ), [ path ], { detached: true, stdio: [ 'ignore', 'ignore', 'ignore' ] } );
         child.unref();
     },
     run = ( file, executor ) => {

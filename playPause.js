@@ -6,7 +6,9 @@ const logToCtl = require( './logToCtl' ),
     writeJson = require( 'write-json-file' ),
     isOn = require( './isPianobarOn' ),
     start = require( './start' ),
-    file = "playing.json",
+    Conf = require( 'conf' ),
+    config = new Conf(),
+    key = "playing",
     camelCase = require( 'camelcase' ),
     ifHasElseDefaultAction = ( propObj, prop, ...args ) => {
         if ( prop in propObj ) {
@@ -27,21 +29,21 @@ const logToCtl = require( './logToCtl' ),
 const run = () => checkIfOn( () => logToCtl( 'playPauseSong' ) ),
 
     singleRun = () => checkIfOn( () =>
-        loadJson( file ).then( state => state.playing ).then( isPlaying =>
+        Promise.resolve( config.get( key ) ).then( isPlaying =>
             run()
-            .then( () => writeJson( file, { playing: !isPlaying } ) )
+            .then( () => config.set( key, !isPlaying ) )
             .then( () => !isPlaying )
         ).then( isPlaying => {
             return playOrPause( isPlaying )
         } ) ),
 
     playOrPause = action => {
-        return checkIfOn( () => loadJson( file ).then( state => state.playing ).then( isPlaying => {
+        return checkIfOn( () => Promise.resolve( config.get( key ) ).then( isPlaying => {
             if ( isPlaying === action ) {
                 return action
             }
             return run()
-                .then( () => writeJson( file, { playing: action } ) ).then( () => action )
+                .then( () => config.set( key, action ) ).then( () => action )
         } ).then( isPlaying => {
             return simple( isPlaying ? 'isPlaying' : 'isPaused', {
                 activate: action => {
@@ -76,7 +78,7 @@ if ( !module.parent ) {
 
 module.exports = run
 module.exports.clear = () => {
-    return writeJson( file, { playing: true } )
+    return config.set( key, true )
 }
 module.exports.singleRun = singleRun
 module.exports.play = () => playOrPause( true )

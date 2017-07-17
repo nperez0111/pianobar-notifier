@@ -48,8 +48,8 @@ const commandLineCommands = require( 'command-line-commands' ),
         playPause: () =>
             run( 'playPause', require( './playPause' ).singleRun ),
         play: () => {
-            const playPause = require( './playPause' )
-            playPause.play()
+            const { play } = require( './playPause' )
+            play()
         },
         pause: () => {
             const playPause = require( './playPause' )
@@ -63,6 +63,7 @@ const commandLineCommands = require( 'command-line-commands' ),
         clearPlaying: () => {
             const playPause = require( './playPause' )
             playPause.clear()
+            process.exit( 0 )
         },
         start: () => {
             run( 'start', require( './start' ).singleRun )
@@ -72,6 +73,7 @@ const commandLineCommands = require( 'command-line-commands' ),
         },
         login: () => {
             run( 'login', require( './login' ).singleRun )
+            setTimeout( () => { process.exit( 0 ) }, 0 )
         },
         isOn: () => {
             require( './isPianobarOn' )().then( () => {

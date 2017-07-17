@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 
 const simple = require( './simpleTask' ),
-    run = () => simple.run( 'login' ),
+    run = () => simple( 'login' ),
+    { log } = require( './shared' ),
     singleRun = () => {
+        log( "run" )
         run()
     }
 if ( !module.parent ) {
+
     singleRun()
 }
 
